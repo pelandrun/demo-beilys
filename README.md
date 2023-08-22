@@ -1,4 +1,3 @@
 # TEST bailys wp
-npm install
-
+npm install\
 npm start
