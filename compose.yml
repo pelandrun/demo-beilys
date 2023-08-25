@@ -6,7 +6,7 @@ services:
       - "./demo-beilys:/app"
     ports:
       - "8080:8080"
-    command: sleep infinity
+    command: sh -c "cd /app ; npm install ; npm run dev"
 
   redis:
     image: redis:7.0.4
