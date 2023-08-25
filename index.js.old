@@ -37,11 +37,14 @@ const publisher = redis.createClient({
     host: process.env.REDIS_SERVER
   }
 });
+publisher.on('error', err => console.log('Redis Client Error', err));
+const subscriber = publisher.duplicate();
 
 //aguardo a que se conectem
 
 (async () => {
   try {
+    await subscriber.connect();
     await publisher.connect();
   } catch (error) {
     console.log("Error de conexion REDIS");
@@ -49,7 +52,7 @@ const publisher = redis.createClient({
   }
 })()
 
-const subscriber = publisher.duplicate();
+
 //Si redis falla aborto la conexion
 publisher.on('connect', () => console.log('::> Redis Client Connected'));
 publisher.on('error', (err) => {
@@ -164,29 +167,15 @@ async function connectToWhatsApp() {
               }
             );
           } else {
-            publisher.lPush(process.env.REDIS_PREFIX + 'output', JSON.stringify(
+            await sock.sendMessage(
+              numberWa,
               {
-                id: numberWa,
-                content: captureMessage,
-                message: messages[0]
-              })
+                text: "Soy un robot",
+              },
+              {
+                quoted: messages[0],
+              }
             );
-            // await sock.sendMessage(
-            //   numberWa,
-            //   {
-            //     text: "Soy un robot",
-            //   },
-            //   {
-            //     quoted: messages[0],
-            //   }
-            // );
-            // await sock.sendMessage(
-            //   numberWa,
-            //   {
-            //     image: fs.readFileSync("./node_modules/pngjs/coverage/lcov-report/favicon.png"),
-            //     caption: "Soy un robot"
-            //   }
-            // );
           }
         }
       }
