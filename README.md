@@ -1,6 +1,5 @@
 # TEST bailys wp
-npm install\
-npm start
+Es un ejemplo de implementación del beilys, en este caso solo responde a la palabra ping con pong, citando el mensaje. Cualquier otro mensaje lo guarda en queue de redis. 
 ~~~
 mkdir bot
 cd bot
@@ -13,3 +12,4 @@ cd /app
 npm install
 npm start
 ~~~
+
