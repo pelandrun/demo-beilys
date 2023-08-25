@@ -1,0 +1,17 @@
+version: '3.4'
+services:
+  node:
+    image: node:lts-bullseye
+    volumes:
+      - "./demo-beilys:/app"
+    ports:
+      - "8080:8080"
+    command: sleep infinity
+
+  redis:
+    image: redis:7.0.4
+    container_name: redis
+
+#networks:
+#  default:
+#    name: servers1_net
